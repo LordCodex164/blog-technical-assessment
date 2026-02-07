@@ -26,7 +26,7 @@ app.use(cors());
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests
   message: 'Too many requests from this IP, please try again later.',
 });
 app.use('/api/', limiter);
@@ -39,7 +39,6 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
-  // In production, use a more structured format
   app.use(
     morgan('combined', {
       skip: (req) => req.path === '/health',
@@ -62,7 +61,7 @@ app.get('/health', (req, res) => {
 // 404 handler
 app.use(notFound);
 
-// Error handler (must be last)
+// Error handler
 app.use(errorHandler);
 
 // Start server
