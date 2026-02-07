@@ -158,8 +158,6 @@ export const getPostBySlug = async (
   try {
     const { slug } = req.params;
 
-    console.log("slug", slug)
-
     const query: any = { slug, deletedAt: null };
 
     // Public users can only see published posts
