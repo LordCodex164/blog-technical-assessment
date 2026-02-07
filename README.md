@@ -84,13 +84,12 @@ blog-technical-assessment/
    
    Edit `.env` and update the following variables:
    ```env
-   MONGODB_URI=mongodb://localhost:27017/blog-api
+   MONGODB_URI=your-mongodb-connection-string
    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
    PORT=3000
    ```
 
 4. **Start MongoDB**
-   - If using local MongoDB, ensure it's running on `localhost:27017`
    - If using MongoDB Atlas, update `MONGODB_URI` with your connection string
 
 5. **Build the project**
@@ -109,13 +108,19 @@ blog-technical-assessment/
 
 The server will start on `http://localhost:3000` (or the port specified in your `.env` file).
 
+## API Base URL
+
+**Production**: `https://blog-technical-assessment.onrender.com`
+
+**Local Development**: `http://localhost:3000`
+
 ## API Endpoints
 
 ### Authentication
 
 #### Register User
 ```http
-POST /api/auth/register
+POST https://blog-technical-assessment.onrender.com/api/auth/register
 Content-Type: application/json
 
 {
@@ -144,7 +149,7 @@ Content-Type: application/json
 
 #### Login
 ```http
-POST /api/auth/login
+POST https://blog-technical-assessment.onrender.com/api/auth/login
 Content-Type: application/json
 
 {
@@ -174,7 +179,7 @@ Content-Type: application/json
 
 #### Create Post (Authenticated)
 ```http
-POST /api/posts
+POST https://blog-technical-assessment.onrender.com/api/posts
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -213,7 +218,7 @@ Content-Type: application/json
 
 #### Get All Posts (Public/Filtered)
 ```http
-GET /api/posts?page=1&limit=10&search=redis&tag=caching&status=published
+GET https://blog-technical-assessment.onrender.com/api/posts?page=1&limit=10&search=redis&tag=caching&status=published
 ```
 
 **Query Parameters:**
@@ -259,7 +264,7 @@ GET /api/posts?page=1&limit=10&search=redis&tag=caching&status=published
 
 #### Get Single Post by Slug (Public)
 ```http
-GET /api/posts/how-redis-caches-http-requests-for-better-performance-1707300000000
+GET https://blog-technical-assessment.onrender.com/api/posts/how-redis-caches-http-requests-for-better-performance-1707300000000
 ```
 
 **Response (200 OK):**
@@ -289,7 +294,7 @@ GET /api/posts/how-redis-caches-http-requests-for-better-performance-17073000000
 
 #### Update Post (Author Only)
 ```http
-PUT /api/posts/507f1f77bcf86cd799439012
+PUT https://blog-technical-assessment.onrender.com/api/posts/507f1f77bcf86cd799439012
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -311,7 +316,7 @@ Content-Type: application/json
       "_id": "507f1f77bcf86cd799439012",
       "title": "How Redis Caches HTTP Requests for Better Performance - Updated",
       "slug": "how-redis-caches-http-requests-for-better-performance-updated-1707300100000",
-      "content": "Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications. [Updated content with additional examples and best practices]...",
+      "content": "Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications."
       "author": {
         "_id": "507f1f77bcf86cd799439011",
         "name": "John Doe",
@@ -328,7 +333,7 @@ Content-Type: application/json
 
 #### Delete Post (Author Only - Soft Delete)
 ```http
-DELETE /api/posts/507f1f77bcf86cd799439012
+DELETE https://blog-technical-assessment.onrender.com/api/posts/507f1f77bcf86cd799439012
 Authorization: Bearer <token>
 ```
 
@@ -397,20 +402,26 @@ You can test the API using:
 1. **cURL**:
    ```bash
    # Register
-   curl -X POST http://localhost:3000/api/auth/register \
+   curl -X POST https://blog-technical-assessment.onrender.com/api/auth/register \
      -H "Content-Type: application/json" \
      -d '{"name":"John Doe","email":"john@example.com","password":"password123"}'
    
    # Login
-   curl -X POST http://localhost:3000/api/auth/login \
+   curl -X POST https://blog-technical-assessment.onrender.com/api/auth/login \
      -H "Content-Type: application/json" \
      -d '{"email":"john@example.com","password":"password123"}'
    
    # Create Post (replace TOKEN with actual token)
-   curl -X POST http://localhost:3000/api/posts \
+   curl -X POST https://blog-technical-assessment.onrender.com/api/posts \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer TOKEN" \
      -d '{"title":"How Redis Caches HTTP Requests for Better Performance","content":"Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications...","tags":["redis","caching","performance","backend","api"],"status":"published"}'
+   
+   # Get All Posts
+   curl -X GET https://blog-technical-assessment.onrender.com/api/posts
+   
+   # Get Single Post by Slug
+   curl -X GET https://blog-technical-assessment.onrender.com/api/posts/how-redis-caches-http-requests-for-better-performance-1707300000000
    ```
 
 2. **Postman**: Import the endpoints and test with the Postman collection

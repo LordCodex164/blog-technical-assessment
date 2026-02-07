@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Post from '../models/Post';
+import logger from '../utils/logger';
 
 export const authorizePostAuthor = async (
   req: Request,
@@ -39,6 +40,13 @@ export const authorizePostAuthor = async (
 
     // Check if user is the author
     if (post.author.toString() !== userId.toString()) {
+      logger.warn('Unauthorized post access attempt', {
+        postId,
+        userId: userId.toString(),
+        postAuthorId: post.author.toString(),
+        path: req.path,
+        method: req.method,
+      });
       res.status(403).json({
         success: false,
         message: 'You are not authorized to perform this action',

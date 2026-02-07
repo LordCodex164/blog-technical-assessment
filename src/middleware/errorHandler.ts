@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ValidationError } from 'express-validator';
+import logger from '../utils/logger';
 
 export interface AppError extends Error {
   statusCode?: number;
@@ -14,6 +15,14 @@ export const errorHandler = (
 ): void => {
   let statusCode = err.statusCode || 500;
   let message = err.message || 'Internal Server Error';
+
+  // Log the error
+  logger.error('Error occurred', err, {
+    statusCode,
+    path: req.path,
+    method: req.method,
+    ip: req.ip,
+  });
 
   // Mongoose validation error
   if (err.name === 'ValidationError') {
@@ -50,6 +59,11 @@ export const errorHandler = (
 };
 
 export const notFound = (req: Request, res: Response): void => {
+  logger.warn('Route not found', {
+    path: req.originalUrl,
+    method: req.method,
+    ip: req.ip,
+  });
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`,

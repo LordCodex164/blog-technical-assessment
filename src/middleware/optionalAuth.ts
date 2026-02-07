@@ -15,11 +15,10 @@ export const optionalAuthenticate = async (
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      // No token provided, continue without authentication
       return next();
     }
 
-    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    const token = authHeader.substring(7); 
 
     try {
       const decoded = verifyToken(token) as JWTPayload;

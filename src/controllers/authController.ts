@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import User from '../models/User';
 import { generateToken } from '../utils/jwt';
+import logger from '../utils/logger';
 
 export const register = async (
   req: Request,
@@ -83,6 +84,7 @@ export const login = async (
     // Find user and include password
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
+      logger.warn('Login attempt with non-existent email', { email });
       res.status(401).json({
         success: false,
         message: 'Invalid email or password',
@@ -93,12 +95,21 @@ export const login = async (
     // Check password
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
+      logger.warn('Login attempt with invalid password', {
+        email,
+        userId: user._id.toString(),
+      });
       res.status(401).json({
         success: false,
         message: 'Invalid email or password',
       });
       return;
     }
+
+    logger.info('User logged in successfully', {
+      userId: user._id.toString(),
+      email: user.email,
+    });
 
     // Generate token
     const token = generateToken({

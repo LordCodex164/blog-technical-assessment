@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import Post from '../models/Post';
+import logger from '../utils/logger';
 
 export const createPost = async (
   req: Request,
@@ -31,6 +32,13 @@ export const createPost = async (
     });
 
     await post.populate('author', 'name email');
+
+    logger.info('Post created successfully', {
+      postId: post._id.toString(),
+      slug: post.slug,
+      authorId: authorId.toString(),
+      status: post.status,
+    });
 
     res.status(201).json({
       success: true,
@@ -115,6 +123,14 @@ export const getPosts = async (
       .limit(limitNum);
 
     const total = await Post.countDocuments(query);
+
+    logger.debug('Posts retrieved', {
+      count: posts.length,
+      total,
+      page: pageNum,
+      limit: limitNum,
+      filters: { search, tag, author, status },
+    });
 
     res.status(200).json({
       success: true,
@@ -215,6 +231,12 @@ export const updatePost = async (
     await post.save();
     await post.populate('author', 'name email');
 
+    logger.info('Post updated successfully', {
+      postId: post._id.toString(),
+      slug: post.slug,
+      authorId: post.author._id.toString(),
+    });
+
     res.status(200).json({
       success: true,
       message: 'Post updated successfully',
@@ -246,6 +268,12 @@ export const deletePost = async (
     // Soft delete
     post.deletedAt = new Date();
     await post.save();
+
+    logger.info('Post soft deleted successfully', {
+      postId: post._id.toString(),
+      slug: post.slug,
+      authorId: post.author._id.toString(),
+    });
 
     res.status(200).json({
       success: true,

@@ -8,6 +8,7 @@ import connectDB from './config/database';
 import authRoutes from './routes/authRoutes';
 import postRoutes from './routes/postRoutes';
 import { errorHandler, notFound } from './middleware/errorHandler';
+import logger from './utils/logger';
 
 // Load environment variables
 dotenv.config();
@@ -34,9 +35,16 @@ app.use('/api/', limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Logging middleware
+// HTTP request logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
+} else {
+  // In production, use a more structured format
+  app.use(
+    morgan('combined', {
+      skip: (req) => req.path === '/health',
+    })
+  );
 }
 
 // Routes
@@ -59,7 +67,11 @@ app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+  logger.info('Server started successfully', {
+    port: PORT,
+    environment: process.env.NODE_ENV || 'development',
+    baseUrl: `http://localhost:${PORT}`,
+  });
 });
 
 export default app;
