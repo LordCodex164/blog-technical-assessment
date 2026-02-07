@@ -59,7 +59,7 @@ const PostSchema: Schema = new Schema(
     },
   },
   {
-    timestamps: false, // We'll handle timestamps manually
+    timestamps: false,
   }
 );
 
@@ -70,19 +70,17 @@ PostSchema.pre('save', function (next) {
     // Add timestamp to ensure uniqueness
     this.slug = `${baseSlug}-${Date.now()}`;
   }
-  // Always update updatedAt when document is modified (but not on initial creation)
   if (this.isModified() && !this.isNew) {
     this.updatedAt = new Date();
   }
-  // Ensure updatedAt is set even for new documents
+
   if (this.isNew && !this.updatedAt) {
     this.updatedAt = new Date();
   }
   next();
 });
 
-// Index for better query performance
-// Note: slug index is automatically created by unique: true, so we don't need to add it explicitly
+// indexxing better query performance
 PostSchema.index({ author: 1, status: 1 });
 PostSchema.index({ tags: 1 });
 PostSchema.index({ deletedAt: 1 });

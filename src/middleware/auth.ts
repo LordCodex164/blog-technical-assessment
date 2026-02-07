@@ -32,7 +32,7 @@ export const authenticate = async (
       return;
     }
 
-    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    const token = authHeader.substring(7); // extraact the token
 
     const decoded = verifyToken(token) as JWTPayload;
 

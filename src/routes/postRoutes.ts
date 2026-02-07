@@ -16,7 +16,6 @@ import {
 
 const router = express.Router();
 
-// Public routes (with optional auth for filtering drafts)
 router.get('/', optionalAuthenticate, getPosts);
 router.get('/:slug', optionalAuthenticate, getPostBySlug);
 
