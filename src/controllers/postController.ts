@@ -158,14 +158,16 @@ export const getPostBySlug = async (
   try {
     const { slug } = req.params;
 
+    console.log("slug", slug)
+
     const query: any = { slug, deletedAt: null };
 
     // Public users can only see published posts
     if (req.user) {
       // Authenticated users can see published posts or their own drafts
       query.$or = [
-        //{ status: 'published' },
-        { status: ['draft', 'pusblished'], author: req.user._id },
+        { status: 'published' },
+        { status: 'draft', author: req.user._id },
       ];
     } else {
       query.status = 'published';
