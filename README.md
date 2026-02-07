@@ -114,6 +114,12 @@ The server will start on `http://localhost:3000` (or the port specified in your 
 
 **Local Development**: `http://localhost:3000`
 
+## API Documentation
+
+📚 **Postman Documentation**: [View API Documentation](https://documenter.getpostman.com/view/21411890/2sBXc8q4Zu)
+
+The Postman documentation includes detailed request/response examples, authentication setup, and all available endpoints.
+
 ## API Endpoints
 
 ### Authentication
@@ -424,7 +430,9 @@ You can test the API using:
    curl -X GET https://blog-technical-assessment.onrender.com/api/posts/how-redis-caches-http-requests-for-better-performance-1707300000000
    ```
 
-2. **Postman**: Import the endpoints and test with the Postman collection
+2. **Postman**: 
+   - 📚 [View Interactive API Documentation](https://documenter.getpostman.com/view/21411890/2sBXc8q4Zu)
+   - Import the endpoints and test with the Postman collection
 
 3. **Thunder Client** (VS Code extension)
 
