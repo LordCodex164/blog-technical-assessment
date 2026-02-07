@@ -179,9 +179,9 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "title": "My First Blog Post",
-  "content": "This is the content of my blog post...",
-  "tags": ["javascript", "nodejs"],
+  "title": "How Redis Caches HTTP Requests for Better Performance",
+  "content": "Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications.",
+  "tags": ["redis", "caching", "performance", "backend", "api", "http", "optimization"],
   "status": "published"
 }
 ```
@@ -194,16 +194,16 @@ Content-Type: application/json
   "data": {
     "post": {
       "_id": "507f1f77bcf86cd799439012",
-      "title": "My First Blog Post",
-      "slug": "my-first-blog-post-1707300000000",
-      "content": "This is the content of my blog post...",
+      "title": "How Redis Caches HTTP Requests for Better Performance",
+      "slug": "how-redis-caches-http-requests-for-better-performance-1707300000000",
+      "content": "Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications.",
       "author": {
         "_id": "507f1f77bcf86cd799439011",
         "name": "John Doe",
         "email": "john@example.com"
       },
       "status": "published",
-      "tags": ["javascript", "nodejs"],
+      "tags": ["redis", "caching", "performance", "backend", "api", "http", "optimization"],
       "createdAt": "2026-02-07T10:00:00.000Z",
       "updatedAt": "2026-02-07T10:00:00.000Z"
     }
@@ -213,7 +213,7 @@ Content-Type: application/json
 
 #### Get All Posts (Public/Filtered)
 ```http
-GET /api/posts?page=1&limit=10&search=javascript&tag=nodejs&status=published
+GET /api/posts?page=1&limit=10&search=redis&tag=caching&status=published
 ```
 
 **Query Parameters:**
@@ -233,16 +233,16 @@ GET /api/posts?page=1&limit=10&search=javascript&tag=nodejs&status=published
     "posts": [
       {
         "_id": "507f1f77bcf86cd799439012",
-        "title": "My First Blog Post",
-        "slug": "my-first-blog-post-1707300000000",
-        "content": "This is the content...",
+        "title": "How Redis Caches HTTP Requests for Better Performance",
+        "slug": "how-redis-caches-http-requests-for-better-performance-1707300000000",
+        "content": "Redis is an in-memory data structure store...",
         "author": {
           "_id": "507f1f77bcf86cd799439011",
           "name": "John Doe",
           "email": "john@example.com"
         },
         "status": "published",
-        "tags": ["javascript", "nodejs"],
+        "tags": ["redis", "caching", "performance", "backend", "api", "http", "optimization"],
         "createdAt": "2026-02-07T10:00:00.000Z",
         "updatedAt": "2026-02-07T10:00:00.000Z"
       }
@@ -259,7 +259,7 @@ GET /api/posts?page=1&limit=10&search=javascript&tag=nodejs&status=published
 
 #### Get Single Post by Slug (Public)
 ```http
-GET /api/posts/my-first-blog-post-1707300000000
+GET /api/posts/how-redis-caches-http-requests-for-better-performance-1707300000000
 ```
 
 **Response (200 OK):**
@@ -270,16 +270,16 @@ GET /api/posts/my-first-blog-post-1707300000000
   "data": {
     "post": {
       "_id": "507f1f77bcf86cd799439012",
-      "title": "My First Blog Post",
-      "slug": "my-first-blog-post-1707300000000",
-      "content": "This is the content...",
+      "title": "How Redis Caches HTTP Requests for Better Performance",
+      "slug": "how-redis-caches-http-requests-for-better-performance-1707300000000",
+      "content": "Redis is an in-memory data structure store that can be used as a caching layer...",
       "author": {
         "_id": "507f1f77bcf86cd799439011",
         "name": "John Doe",
         "email": "john@example.com"
       },
       "status": "published",
-      "tags": ["javascript", "nodejs"],
+      "tags": ["redis", "caching", "performance", "backend", "api", "http", "optimization"],
       "createdAt": "2026-02-07T10:00:00.000Z",
       "updatedAt": "2026-02-07T10:00:00.000Z"
     }
@@ -294,9 +294,9 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "title": "Updated Title",
-  "content": "Updated content...",
-  "tags": ["javascript", "nodejs", "typescript"],
+  "title": "How Redis Caches HTTP Requests for Better Performance - Updated",
+  "content": "Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications. [Updated content with additional examples and best practices]...",
+  "tags": ["redis", "caching", "performance", "backend", "api", "http", "optimization", "best-practices"],
   "status": "published"
 }
 ```
@@ -309,16 +309,16 @@ Content-Type: application/json
   "data": {
     "post": {
       "_id": "507f1f77bcf86cd799439012",
-      "title": "Updated Title",
-      "slug": "updated-title-1707300100000",
-      "content": "Updated content...",
+      "title": "How Redis Caches HTTP Requests for Better Performance - Updated",
+      "slug": "how-redis-caches-http-requests-for-better-performance-updated-1707300100000",
+      "content": "Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications. [Updated content with additional examples and best practices]...",
       "author": {
         "_id": "507f1f77bcf86cd799439011",
         "name": "John Doe",
         "email": "john@example.com"
       },
       "status": "published",
-      "tags": ["javascript", "nodejs", "typescript"],
+      "tags": ["redis", "caching", "performance", "backend", "api", "http", "optimization", "best-practices"],
       "createdAt": "2026-02-07T10:00:00.000Z",
       "updatedAt": "2026-02-07T10:01:00.000Z"
     }
@@ -410,7 +410,7 @@ You can test the API using:
    curl -X POST http://localhost:3000/api/posts \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer TOKEN" \
-     -d '{"title":"My Post","content":"Content here","status":"published"}'
+     -d '{"title":"How Redis Caches HTTP Requests for Better Performance","content":"Redis is an in-memory data structure store that can be used as a caching layer to significantly improve the performance of web applications...","tags":["redis","caching","performance","backend","api"],"status":"published"}'
    ```
 
 2. **Postman**: Import the endpoints and test with the Postman collection

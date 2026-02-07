@@ -1,0 +1,44 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.notFound = exports.errorHandler = void 0;
+const errorHandler = (err, req, res, next) => {
+    let statusCode = err.statusCode || 500;
+    let message = err.message || 'Internal Server Error';
+    // Mongoose validation error
+    if (err.name === 'ValidationError') {
+        statusCode = 400;
+        message = Object.values(err.errors)
+            .map((e) => e.message)
+            .join(', ');
+    }
+    // Mongoose duplicate key error
+    if (err.code === 11000) {
+        statusCode = 409;
+        const field = Object.keys(err.keyPattern)[0];
+        message = `${field} already exists`;
+    }
+    // Mongoose cast error (invalid ObjectId)
+    if (err.name === 'CastError') {
+        statusCode = 400;
+        message = 'Invalid ID format';
+    }
+    // Express validator errors
+    if (err.errors && Array.isArray(err.errors)) {
+        statusCode = 400;
+        message = err.errors.map((e) => e.msg).join(', ');
+    }
+    res.status(statusCode).json({
+        success: false,
+        message,
+        ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    });
+};
+exports.errorHandler = errorHandler;
+const notFound = (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: `Route ${req.originalUrl} not found`,
+    });
+};
+exports.notFound = notFound;
+//# sourceMappingURL=errorHandler.js.map
